@@ -32,7 +32,7 @@
             }
         </script>
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900" x-data="{
+    <body class="font-sans antialiased bg-gray-200 dark:bg-gray-900" x-data="{
         sidebarOpen: false
     }" :class="{
         'overflow-y-hidden': sidebarOpen

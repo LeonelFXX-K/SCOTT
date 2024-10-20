@@ -14,9 +14,6 @@
                     </svg>
                 </button>
                 <a class="flex justify-start items-center text-base font-semibold text-gray-900 dark:text-white">
-                    <img class="w-10 h-10 mr-2 rounded-md"
-                        src="https://play-lh.googleusercontent.com/f6dYwg3khIfRRVnsnpOLkfPvuINkGaSvDdxJhEtcRc5TQv8rrKLrkPipAnaVLxEM1Cc=w240-h480-rw"
-                        alt="Logotipo">
                     <div class="flex flex-col text-left ms-1">
                         {{ config('app.name', 'Laravel') }}
                         <span class="text-sm font-normal text-gray-600 dark:text-gray-400">

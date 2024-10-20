@@ -1,13 +1,20 @@
 @php
     $links = [
         [
-            'name' => 'Dashboard',
+            'name' => __('Dashboard'),
             'icon' => 'fa-solid fa-house',
             'route' => route('admin.dashboard'),
             'active' => request()->routeIs('admin.dashboard'),
+        ],
+        [
+            'name' => __('Channels'),
+            'icon' => 'fa-solid fa-tv',
+            'route' => route('admin.channels.index'),
+            'active' => request()->routeIs('admin.channels.*'),
         ]
     ];
 @endphp
+
 
 <aside id="logo-sidebar"
     class="fixed shadow top-0 left-0 z-40 w-56 h-[100dvh] pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
