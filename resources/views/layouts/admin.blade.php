@@ -46,7 +46,7 @@
     
         @include('layouts.partials.admin.sidebar')
     
-        <div class="p-4 sm:ml-56">
+        <div class="p-4 sm:ml-52">
     
             <div class="mt-14">
     

@@ -1,5 +1,5 @@
 <nav class="fixed shadow top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="px-3 py-2 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <button x-on:click="sidebarOpen = !sidebarOpen" data-drawer-target="logo-sidebar"

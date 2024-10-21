@@ -17,7 +17,7 @@
 
 
 <aside id="logo-sidebar"
-    class="fixed shadow top-0 left-0 z-40 w-56 h-[100dvh] pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
+    class="fixed shadow top-0 left-0 z-40 w-52 h-[100dvh] pt-[70px] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
     :class="{
         'translate-x-0 ease-out': sidebarOpen,
         '-translate-x-full ease-in': !sidebarOpen
