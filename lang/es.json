@@ -100,6 +100,7 @@
     "Edit Profile": "Editar perfil",
     "Editor": "Editor",
     "Editor users have the ability to read, create, and update.": "Los editores están habilitados para leer, crear y actualizar.",
+    "ex. Edgar Leonel Acevedo Cuevas": "ej. Edgar Leonel Acevedo Cuevas",
     "Email": "Correo electrónico",
     "Email Password Reset Link": "Enviar enlace para restablecer contraseña",
     "Enable": "Habilitar",
@@ -186,10 +187,12 @@
     "Multi-Status": "Multiestado",
     "Multiple Choices": "Múltiples opciones",
     "Name": "Nombre",
+    "name@stargroup.com.mx": "nombre@stargroup.com.mx",
     "Network Authentication Required": "Se requiere autenticación de red",
     "Network Connect Timeout Error": "Error de tiempo de espera de conexión de red",
     "Network Read Timeout Error": "Error de tiempo de espera de lectura de red",
     "New": "Nuevo",
+    "New channel created successfully.": "Nuevo canal creado correctamente.",
     "New :name": "Nuevo :name",
     "New Password": "Nueva Contraseña",
     "No": "No",
@@ -360,6 +363,7 @@
     "Unsupported Media Type": "Tipo de medio no admitido",
     "Up": "Arriba",
     "Update": "Actualizar",
+    "Update image": "Actualizar imagen",
     "Update :name": "Actualizar :name",
     "Update Password": "Actualizar contraseña",
     "Update your account's profile information and email address.": "Actualice la información de su cuenta y la dirección de correo electrónico.",
@@ -387,5 +391,6 @@
     "You may delete any of your existing tokens if they are no longer needed.": "Puede eliminar cualquiera de sus tokens existentes si ya no los necesita.",
     "You may not delete your personal team.": "No se puede borrar su equipo personal.",
     "You may not leave a team that you created.": "No se puede abandonar un equipo que usted creó.",
-    "Your email address is unverified.": "Su dirección de correo electrónico no está verificada."
+    "Your email address is unverified.": "Su dirección de correo electrónico no está verificada.",
+    "Your registration for the new channel contains errors.": "Tu registro para el nuevo canal contiene errores."
 }

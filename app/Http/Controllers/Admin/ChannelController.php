@@ -45,9 +45,9 @@ class ChannelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Channel $channel)
     {
-        //
+        return view("admin.channels.edit", compact("channel"));
     }
 
     /**

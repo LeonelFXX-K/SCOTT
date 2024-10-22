@@ -30,7 +30,7 @@
                             </x-label>
                             <x-input id="email" class="block mt-1 w-full" type="email" name="email"
                                 :value="old('email')" required autofocus autocomplete="username"
-                                placeholder="nombre@stargroup.com.mx" />
+                                placeholder="{{ __('name@stargroup.com.mx') }}" />
                         </div>
 
                         <div class="mt-4">

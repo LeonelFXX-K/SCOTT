@@ -37,7 +37,7 @@
                             </x-label>
                             <x-input id="name" class="block mt-1 w-full" type="text" name="name"
                                 :value="old('name')" required autofocus autocomplete="name"
-                                placeholder="ej. Edgar Leonel Acevedo Cuevas" />
+                                placeholder="{{ __('ex. Edgar Leonel Acevedo Cuevas') }}" />
                         </div>
 
                         <div class="mt-4">
@@ -47,7 +47,7 @@
                             </x-label>
                             <x-input id="email" class="block mt-1 w-full" type="email" name="email"
                                 :value="old('email')" required autocomplete="username"
-                                placeholder="nombre@stargroup.com.mx" />
+                                placeholder="{{ __('name@stargroup.com.mx') }}" />
                         </div>
 
                         <div class="grid grid-cols-2 gap-2 mt-4">

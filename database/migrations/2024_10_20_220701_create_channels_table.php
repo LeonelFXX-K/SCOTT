@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('image_url');
+            $table->string('image_url')->unique();
             $table->integer('number');
             $table->integer('number_oktv');
             $table->string('name');
-            $table->string('oktv_url');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
