@@ -21,72 +21,66 @@
         <form wire:submit.prevent="store">
             @csrf
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="mt-4 md:mt-0">
+                <!-- Image -->
+                <figure class="mb-4 relative rounded-lg overflow-hidden">
+                    <div class="absolute right-20 p-4 pt-6">
+                        <label class="flex items-center px-4 py-2 rounded-lg bg-primary-600 cursor-pointer text-white">
+                            {{ __('Update image') }}
+                            <i class="fas fa-camera ml-2"></i>
+                            <input type="file" class="hidden" accept="image/*" wire:model="image_url">
+                        </label>
+                    </div>
+                    <img class="aspect-[16/9] object-contain object-center w-full rounded-lg"
+                        src="{{ $image_url ? $image_url->temporaryUrl() : asset('img/no-image.png') }}" alt="">
+                </figure>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mt-8">
+                <!-- Number -->
                 <div>
-                    <div class="grid grid-cols-2 gap-6">
-                        <!-- Number -->
-                        <div>
-                            <x-label for="number">
-                                <i class="fa-solid fa-hashtag mr-1"></i>
-                                {{ __('Number') }}
-                            </x-label>
-                            <x-input id="number" class="block mt-1 w-full" type="number" wire:model="number"
-                                :value="old('number')" required autofocus autocomplete="number"
-                                placeholder="{{ __('Channel number') }}" />
-                        </div>
-
-                        <!-- OKTV Number -->
-                        <div>
-                            <x-label for="number_oktv">
-                                <i class="fa-solid fa-hashtag mr-1"></i>
-                                {{ __('OKTV Number') }}
-                            </x-label>
-                            <x-input id="number_oktv" class="block mt-1 w-full" type="number" wire:model="number_oktv"
-                                :value="old('number_oktv')" required autocomplete="number_oktv"
-                                placeholder="{{ __('Channel number on OKTV') }}" />
-                        </div>
-                    </div>
-
-                    <!-- Name -->
-                    <div class="mt-4">
-                        <x-label for="name">
-                            <i class="fa-solid fa-file-signature mr-1"></i>
-                            {{ __('Name') }}
-                        </x-label>
-                        <x-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
-                            :value="old('name')" required autocomplete="name" placeholder="{{ __('Channel name') }}" />
-                    </div>
-
-                    <!-- URL -->
-                    <div class="mt-4">
-                        <x-label for="url">
-                            <i class="fa-solid fa-link mr-1"></i>
-                            {{ __('URL') }}
-                        </x-label>
-                        <x-input id="url" class="block mt-1 w-full" type="text" wire:model="url"
-                            :value="old('url')" required autocomplete="url" placeholder="{{ __('Channel URL') }}" />
-                    </div>
+                    <x-label for="number">
+                        <i class="fa-solid fa-hashtag mr-1"></i>
+                        {{ __('Number') }}
+                    </x-label>
+                    <x-input id="number" class="block mt-1 w-full" type="number" wire:model="number"
+                        :value="old('number')" required autocomplete="number" placeholder="{{ __('Channel number') }}" />
                 </div>
 
-                <div class="mt-4 md:mt-0">
-                    <figure class="mb-4 relative">
-                        <div class="absolute right-0 p-4">
-                            <label
-                                class="flex items-center px-4 py-2 rounded-lg bg-primary-600 cursor-pointer text-white">
-                                {{ __('Update image') }}
-                                <i class="fas fa-camera ml-2"></i>
-                                <input type="file" class="hidden" accept="image/*" wire:model="image_url">
-                            </label>
-                        </div>
-                        <img class="aspect-[16/9] object-cover object-center w-full rounded-lg"
-                            src="{{ $image_url ? $image_url->temporaryUrl() : asset('img/no-image.png') }}"
-                            alt="">
-                    </figure>
+                <!-- OKTV Number -->
+                <div>
+                    <x-label for="number_oktv">
+                        <i class="fa-solid fa-book-open mr-1"></i>
+                        {{ __('OKTV Number') }}
+                    </x-label>
+                    <x-input id="number_oktv" class="block mt-1 w-full" type="number" wire:model="number_oktv"
+                        :value="old('number_oktv')" required autocomplete="number_oktv"
+                        placeholder="{{ __('Channel number on OKTV') }}" />
                 </div>
             </div>
 
+            <!-- Name -->
+            <div class="mt-4">
+                <x-label for="name">
+                    <i class="fa-solid fa-file-signature mr-1"></i>
+                    {{ __('Name') }}
+                </x-label>
+                <x-input id="name" class="block mt-1 w-full" type="text" wire:model="name" :value="old('name')"
+                    required autocomplete="name" placeholder="{{ __('Channel name') }}" />
+            </div>
+
+            <!-- URL -->
+            <div class="mt-4">
+                <x-label for="url">
+                    <i class="fa-solid fa-link mr-1"></i>
+                    {{ __('URL') }}
+                </x-label>
+                <x-input id="url" class="block mt-1 w-full" type="text" wire:model="url" :value="old('url')"
+                    required autocomplete="url" placeholder="{{ __('Channel URL') }}" />
+            </div>
+
             <!-- Submit -->
-            <x-button class="w-full flex justify-center items-center mt-4">
+            <x-button class="w-full flex justify-center items-center mt-8">
                 {{ __('Register new channel') }}
                 <i class="fa-solid fa-floppy-disk ml-2"></i>
             </x-button>

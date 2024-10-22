@@ -16,14 +16,6 @@ class CreateChannel extends Component
     public $name;
     public $url;
 
-    public $channel = [
-        'image_url' => '',
-        'number' => '',
-        'number_oktv' => '',
-        'name' => '',
-        'url' => '',
-    ];
-
     public function boot()
     {
         $this->withValidator(function ($validator) {
@@ -33,7 +25,7 @@ class CreateChannel extends Component
                 $this->dispatch('swal', [
                     'icon' => 'error',
                     'title' => '¡Error!',
-                    'html' => __('Your registration for the new channel contains errors.') . '<br>' . '<br>' . $errors,
+                    'html' => __('Your registration for the new channel contains errors.') . '<br>' . '<br>' . __('List of errors:') . '<br>' . '<br>' . $errors,
                 ]);
             }
         });
@@ -48,16 +40,23 @@ class CreateChannel extends Component
             'name' => 'required|string',
             'url' => 'nullable|url',
         ], [], [
-            'image_url' => 'imagen del canal',
-            'number' => 'número del canal',
-            'number_oktv' => 'número del canal en OKTV',
-            'name' => 'nombre del canal',
-            'url' => 'url del canal',
+            'image_url' => __('channel image'),
+            'number' => __('channel number'),
+            'number_oktv' => __('OKTV channel number'),
+            'name' => __('channel name'),
+            'url' => __('channel URL'),
         ]);
 
-        $this->channel['image_url'] = $this->image_url->store('public/channels');
 
-        $channel = Channel::create($this->channel);
+        $imagePath = $this->image_url->store('public/channels');
+
+        $channel = Channel::create([
+            'image_url' => $imagePath,
+            'number' => $this->number,
+            'number_oktv' => $this->number_oktv,
+            'name' => $this->name,
+            'url' => $this->url,
+        ]);
 
         session()->flash('swal', [
             'icon' => 'success',
