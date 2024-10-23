@@ -47,11 +47,11 @@ class CreateChannel extends Component
             'url' => __('channel URL'),
         ]);
 
-
-        $imagePath = $this->image_url->store('public/channels');
+        $imageName = time() . '_' . $this->image_url->getClientOriginalName();
+        $this->image_url->storeAs('public/channels', $imageName);
 
         $channel = Channel::create([
-            'image_url' => $imagePath,
+            'image_url' => 'channels/' . $imageName,
             'number' => $this->number,
             'number_oktv' => $this->number_oktv,
             'name' => $this->name,
@@ -64,7 +64,7 @@ class CreateChannel extends Component
             'text' => __('New channel created successfully.')
         ]);
 
-        return redirect()->route('admin.channels.edit', $channel);
+        return redirect()->route('admin.channels.show', $channel);
     }
 
     public function render()

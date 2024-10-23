@@ -26,8 +26,8 @@
                 <figure class="mb-4 relative rounded-lg overflow-hidden">
                     <div class="absolute right-20 p-4 pt-6">
                         <label class="flex items-center px-4 py-2 rounded-lg bg-primary-600 cursor-pointer text-white">
+                            <i class="fas fa-camera mr-2"></i>
                             {{ __('Update image') }}
-                            <i class="fas fa-camera ml-2"></i>
                             <input type="file" class="hidden" accept="image/*" wire:model="image_url">
                         </label>
                     </div>

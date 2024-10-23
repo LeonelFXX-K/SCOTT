@@ -37,9 +37,9 @@ class ChannelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Channel $channel)
     {
-        //
+        return view("admin.channels.show", compact("channel"));
     }
 
     /**
