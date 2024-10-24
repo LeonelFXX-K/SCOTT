@@ -7,11 +7,10 @@
             <div
                 class="w-full bg-white rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-4xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1
-                        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         {{ __('Register your details for your account') }}
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            {{ __("Already have an account?") }}
+                            {{ __('Already have an account?') }}
                             <a href="{{ route('login') }}"
                                 class="ms-1 font-medium text-primary-500 underline hover:text-primary-600">
                                 {{ __('Sign In') }}
@@ -72,8 +71,8 @@
                         </div>
 
                         <x-button class="w-full mt-8 flex items-center justify-center">
+                            <i class="fa-solid fa-right-to-bracket mr-2"></i>
                             {{ __('Sign Up') }}
-                            <i class="fa-solid fa-right-to-bracket ml-2"></i>
                         </x-button>
                     </form>
                 </div>

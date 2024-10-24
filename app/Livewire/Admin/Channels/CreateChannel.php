@@ -15,6 +15,7 @@ class CreateChannel extends Component
     public $number_oktv;
     public $name;
     public $url;
+    public $status = '';
 
     public function boot()
     {
@@ -35,20 +36,23 @@ class CreateChannel extends Component
     {
         $this->validate([
             'image_url' => 'required|unique:channels,image_url',
-            'number' => 'required|integer',
-            'number_oktv' => 'required|integer',
+            'number' => 'required|integer|unique:channels,number',
+            'number_oktv' => 'nullable|integer',
             'name' => 'required|string',
             'url' => 'nullable|url',
+            'status' => 'required|string',
         ], [], [
             'image_url' => __('channel image'),
             'number' => __('channel number'),
             'number_oktv' => __('OKTV channel number'),
             'name' => __('channel name'),
             'url' => __('channel URL'),
+            'status' => __('channel status'),
         ]);
 
         $imageName = time() . '_' . $this->image_url->getClientOriginalName();
-        $this->image_url->storeAs('public/channels', $imageName);
+
+        $this->image_url->storeAs('channels', $imageName, 'public');
 
         $channel = Channel::create([
             'image_url' => 'channels/' . $imageName,
@@ -56,6 +60,7 @@ class CreateChannel extends Component
             'number_oktv' => $this->number_oktv,
             'name' => $this->name,
             'url' => $this->url,
+            'status' => $this->status,
         ]);
 
         session()->flash('swal', [

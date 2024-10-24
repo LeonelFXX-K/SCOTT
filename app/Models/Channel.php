@@ -13,7 +13,8 @@ class Channel extends Model
         'number',
         'number_oktv',
         'name',
-        'url'
+        'url',
+        'status',
     ];
 
     protected function image(): Attribute
