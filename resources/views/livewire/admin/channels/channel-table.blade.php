@@ -110,19 +110,18 @@
                             <a href="#" title="{{ __('Watch channel') }}"
                                 onclick="event.preventDefault(); openMiniPlayer('{{ $channel->url }}');"
                                 class="flex justify-center items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                <i
-                                    class="fa-solid
-                                    fa-arrow-up-right-from-square mr-1.5"></i>
+                                <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i>
                                 {{ __('Watch') }}
                             </a>
                             <!-- Show -->
-                            <a href="" title="{{ __('Show channel information') }}"
+                            <a href="{{ route('admin.channels.show', $channel) }}"
+                                title="{{ __('Show channel information') }}"
                                 class="flex justify-center items-center text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                                 <i class="fa-solid fa-eye mr-1.5"></i>
                                 {{ __('Show') }}
                             </a>
                             <!-- Edit -->
-                            <a href="" title="{{ __('Edit channel') }}"
+                            <a href="{{ route('admin.channels.edit', $channel) }}" title="{{ __('Edit channel') }}"
                                 class="flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 <i class="fa-solid fa-pen-to-square mr-1.5"></i>
                                 {{ __('Edit') }}
@@ -142,7 +141,9 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-4 py-3 text-center">{{ __('No channels found.') }}</td>
+                        <td colspan="6" class="px-4 py-3 text-center">
+                            {{ __('There are no channels that match your search.') }}
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

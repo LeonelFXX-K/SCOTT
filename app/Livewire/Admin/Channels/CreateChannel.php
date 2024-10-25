@@ -65,7 +65,7 @@ class CreateChannel extends Component
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => '¡Bien hecho!',
+            'title' => __('Well done!'),
             'text' => __('New channel created successfully.')
         ]);
 

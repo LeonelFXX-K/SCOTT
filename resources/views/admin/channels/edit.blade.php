@@ -10,9 +10,11 @@
         'route' => route('admin.channels.index'),
     ],
     [
-        'name' => __('Register new channel'),
-        'icon' => 'fa-solid fa-plus',
+        'name' => __('Update channel'),
+        'icon' => 'fa-solid fa-pen-to-square',
     ],
 ]">
+
+    @livewire('admin.channels.edit-channel', ['channel' => $channel])
 
 </x-admin-layout>
