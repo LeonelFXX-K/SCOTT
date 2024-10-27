@@ -23,11 +23,11 @@
                 {{ __('Go back') }}
             </a>
 
-            <a href="#" title="{{ __('Watch channel') }}"
+            <a href="#" title="{{ __('Play channel') }}"
                 onclick="event.preventDefault(); openMiniPlayer('{{ $channel->url }}');"
                 class="flex justify-center items-center text-white bg-primary-600 hover:bg-primary-500 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-800 font-medium rounded-lg text-sm px-5 py-2 text-center">
-                <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i>
-                {{ __('Watch') }}
+                <i class="fa-solid fa-play mr-1.5"></i>
+                {{ __('Play') }}
             </a>
 
             <a href="{{ route('admin.channels.edit', $channel) }}"
@@ -68,8 +68,8 @@
                 </p>
             </h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <div class="grid grid-cols-2 gap-6">
+                <div class="flex flex-col justify-between min-h-full">
+                    <div class="grid grid-cols-2 gap-4">
                         <!-- Number -->
                         <div>
                             <x-label for="number">
@@ -109,8 +109,10 @@
                     </div>
                 </div>
                 <!-- Image -->
-                <div>
-                    <figure class="mb-4 relative">
+                <div class="flex items-start">
+                    <figure
+                        class="bg-gray-50 border border-gray-300 rounded-lg p-2.5 mb-4 relative dark:bg-gray-700 dark:border-gray-600"
+                        style="min-height: 100%;">
                         <img class="aspect-[16/9] object-contain object-center w-full rounded-lg"
                             src="{{ $channel->image_url ? asset('storage/' . $channel->image_url) : asset('img/no-image.png') }}"
                             alt="{{ $channel->name }}">
@@ -120,28 +122,33 @@
         </div>
     </div>
 
-</x-admin-layout>
+    <form action="{{ route('admin.channels.destroy', $channel) }}" method="POST" id="delete-form">
+        @csrf
+        @method('DELETE')
+    </form>
 
-@push('js')
-    <script>
-        function confirmDelete(channelID) {
-            Swal.fire({
-                title: "{{ __('Are you sure?') }}",
-                text: "{{ __('You wont be able to revert this!') }}",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "{{ __('Yes, delete it!') }}",
-                cancelButtonText: "{{ __('Cancel') }}"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + channelID).submit();
-                }
-            });
-        }
-    </script>
-@endpush
+    @push('js')
+        <script>
+            function confirmDelete() {
+                Swal.fire({
+                    title: "{{ __('Are you sure?') }}",
+                    text: "{{ __('You wont be able to revert this!') }}",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "{{ __('Yes, delete it!') }}",
+                    cancelButtonText: "{{ __('Cancel') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form').submit();
+                    }
+                });
+            }
+        </script>
+    @endpush
+
+</x-admin-layout>
 
 <script>
     function openMiniPlayer(url) {

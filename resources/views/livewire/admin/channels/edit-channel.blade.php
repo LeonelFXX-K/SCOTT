@@ -23,13 +23,16 @@
 
             <div class="mt-4 md:mt-0">
                 <!-- Image -->
-                <figure class="mb-4 relative rounded-lg overflow-hidden">
+                <figure
+                    class="bg-gray-50 border border-gray-300 rounded-lg p-2.5 mb-4 relative dark:bg-gray-700 dark:border-gray-600"
+                    style="min-height: 100%;">
                     <div class="absolute right-20 p-4 pt-6">
-                        <label class="flex items-center px-4 py-2 rounded-lg bg-primary-600 cursor-pointer text-white">
+                        <x-label
+                            class="flex items-center px-4 py-2 rounded-lg bg-primary-600 cursor-pointer text-white">
                             <i class="fas fa-image mr-2"></i>
                             {{ __('Update image') }}
                             <input type="file" class="hidden" accept="image/*" wire:model="new_image">
-                        </label>
+                        </x-label>
                     </div>
                     <img class="aspect-[16/9] object-contain object-center w-full rounded-lg"
                         src="{{ $new_image ? $new_image->temporaryUrl() : ($image_url ? asset('storage/' . $image_url) : asset('img/no-image.png')) }}"

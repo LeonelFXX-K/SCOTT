@@ -20,6 +20,11 @@
         </div>
         <div
             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+            <a href="{{ route('admin.channels.create') }}"
+                class="block text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 shadow-xl">
+                <i class="fa-solid fa-plus mr-1"></i>
+                {{ __('Register new channel') }}
+            </a>
             <div class="flex items-center space-x-3 w-full md:w-auto">
                 <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                     class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -35,16 +40,11 @@
                     </label>
                 </div>
             </div>
-            <a href="{{ route('admin.channels.create') }}"
-                class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 shadow-xl">
-                <i class="fa-solid fa-plus mr-1"></i>
-                {{ __('Register new channel') }}
-            </a>
         </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-white uppercase bg-primary-600 shadow-2xl">
+            <thead class="text-xs dark:text-white uppercase dark:bg-gray-600 shadow-2xl">
                 <tr>
                     <th scope="col" class="px-4 py-3">
                         <i class="fa-solid fa-image mr-1">
@@ -67,30 +67,32 @@
                         {{ __('Status') }}
                     </th>
                     <th scope="col" class="px-4 py-3">
-                        <i class="fa-solid fa-sliders-h mr-1"></i>
-                        {{ __('Options') }}
+                        <span class="sr-only">
+                            <i class="fa-solid fa-sliders-h mr-1"></i>
+                            {{ __('Options') }}
+                        </span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($channels as $channel)
                     <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-900">
-                        <td class="px-4 py-3">
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 text-black dark:text-white">
+                        <td class="px-4 py-2.5">
                             <img src="{{ $channel->image_url ? asset('storage/' . $channel->image_url) : asset('img/no-image.png') }}"
                                 alt="{{ $channel->name }}" class="w-10 h-10 object-center object-contain">
                         </td>
                         <th scope="row"
-                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            class="px-4 py-2.5 font-bold text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $channel->name }}
                         </th>
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-2.5">
                             {{ $channel->number }}
                         </td>
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-2.5">
                             {{ $channel->number_oktv }}
                         </td>
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-2.5">
                             @if ($channel->status === 'Activo')
                                 <span
                                     class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-800 bg-green-200 rounded-full dark:bg-green-800 dark:text-green-200">
@@ -105,38 +107,62 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 flex items-center">
-                            <!-- Watch -->
-                            <a href="#" title="{{ __('Watch channel') }}"
-                                onclick="event.preventDefault(); openMiniPlayer('{{ $channel->url }}');"
-                                class="flex justify-center items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i>
-                                {{ __('Watch') }}
-                            </a>
-                            <!-- Show -->
-                            <a href="{{ route('admin.channels.show', $channel) }}"
-                                title="{{ __('Show channel information') }}"
-                                class="flex justify-center items-center text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
-                                <i class="fa-solid fa-eye mr-1.5"></i>
-                                {{ __('Show') }}
-                            </a>
-                            <!-- Edit -->
-                            <a href="{{ route('admin.channels.edit', $channel) }}" title="{{ __('Edit channel') }}"
-                                class="flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                <i class="fa-solid fa-pen-to-square mr-1.5"></i>
-                                {{ __('Edit') }}
-                            </a>
-                            <!-- Delete -->
-                            <form action="" method="POST" id="delete-form-{{ $channel->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="confirmDelete({{ $channel->id }})"
-                                    title="{{ __('Delete channel') }}"
-                                    class="flex justify-center items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
-                                    <i class="fa-solid fa-trash-can mr-1.5"></i>
-                                    {{ __('Delete') }}
-                                </button>
-                            </form>
+                        <td class="px-4 py-2.5 flex items-center justify-center">
+                            <button id="channel-dropdown-button-{{ $channel->id }}"
+                                data-dropdown-toggle="channel-dropdown-{{ $channel->id }}"
+                                class="inline-flex items-center p-3 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                type="button">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+
+                            <div id="channel-dropdown-{{ $channel->id }}"
+                                class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-300 shadow-2xl dark:bg-gray-700 dark:divide-gray-600">
+                                <ul class="flex flex-col items-start py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="channel-dropdown-button-{{ $channel->id }}">
+                                    <!-- Play -->
+                                    <li class="w-full">
+                                        <a href="#" title="{{ __('Play channel') }}"
+                                            onclick="event.preventDefault(); openMiniPlayer('{{ $channel->url }}');"
+                                            class="flex items-center w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <i class="fa-solid fa-play mr-2"></i>
+                                            {{ __('Play') }}
+                                        </a>
+                                    </li>
+                                    <!-- Show -->
+                                    <li class="w-full">
+                                        <a href="{{ route('admin.channels.show', $channel) }}"
+                                            title="{{ __('Show channel information') }}"
+                                            class="flex items-center w-full py-2 px-3.5 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <i class="fa-solid fa-eye mr-2"></i> {{ __('Show') }}
+                                        </a>
+                                    </li>
+                                    <!-- Edit -->
+                                    <li class="w-full">
+                                        <a href="{{ route('admin.channels.edit', $channel) }}"
+                                            title="{{ __('Edit channel') }}"
+                                            class="flex items-center w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <i class="fa-solid fa-pen-to-square mr-2"></i> {{ __('Edit') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Delete -->
+                                <div class="w-full py-1">
+                                    <form action="{{ route('admin.channels.destroy', $channel) }}" method="POST"
+                                        id="delete-form-{{ $channel->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete({{ $channel->id }})"
+                                            title="{{ __('Delete channel') }}"
+                                            class="flex items-center w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            <i class="fa-solid fa-trash-can mr-2"></i> {{ __('Delete') }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

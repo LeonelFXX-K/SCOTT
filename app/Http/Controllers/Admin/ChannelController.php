@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ChannelController extends Controller
 {
@@ -61,8 +62,21 @@ class ChannelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Channel $channel)
     {
-        //
+        if ($channel->image_url && Storage::disk('public')->exists($channel->image_url)) {
+            Storage::disk('public')->delete($channel->image_url);
+        }
+
+        $channel->delete();
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => __('Well done!'),
+            'text' => __('Channel deleted successfully.')
+        ]);
+
+        return redirect()->route('admin.channels.index');
     }
+
 }
