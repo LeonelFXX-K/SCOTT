@@ -80,19 +80,37 @@
                     required autocomplete="url" placeholder="{{ __('Channel URL') }}" />
             </div>
 
-            <!-- Status -->
-            <div class="mt-4">
-                <x-label for="status">
-                    <i class="fa-solid fa-toggle-on mr-1"></i>
-                    {{ __('Status') }}
-                </x-label>
-                <select id="status"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    wire:model="status" required>
-                    <option value="" disabled>{{ __('Select status') }}</option>
-                    <option value="Activo">{{ __('Active') }}</option>
-                    <option value="Inactivo">{{ __('Inactive') }}</option>
-                </select>
+            <div class="grid grid-cols-2 gap-6 mt-4">
+                <!-- Category -->
+                <div>
+                    <x-label for="category">
+                        <i class="fa-solid fa-list mr-1"></i>
+                        {{ __('Category') }}
+                    </x-label>
+                    <select id="category"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        wire:model="category" required>
+                        <option value="" disabled>{{ __('Select category') }}</option>
+                        @foreach (App\Enums\ChannelCategory::cases() as $category)
+                            <option value="{{ $category->value }}">{{ $category->label() }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Status -->
+                <div>
+                    <x-label for="status">
+                        <i class="fa-solid fa-toggle-on mr-1"></i>
+                        {{ __('Status') }}
+                    </x-label>
+                    <select id="status"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        wire:model="status" required>
+                        <option value="" disabled>{{ __('Select status') }}</option>
+                        <option value="Activo">{{ __('Active') }}</option>
+                        <option value="Inactivo">{{ __('Inactive') }}</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Submit -->

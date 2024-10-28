@@ -16,6 +16,7 @@ class EditChannel extends Component
     public $number_oktv;
     public $name;
     public $url;
+    public $category;
     public $status;
     public $image_url;
     public $new_image;
@@ -42,6 +43,7 @@ class EditChannel extends Component
         $this->number_oktv = $channel->number_oktv;
         $this->name = $channel->name;
         $this->url = $channel->url;
+        $this->category = $channel->category;
         $this->status = $channel->status;
         $this->image_url = $channel->image_url;
     }
@@ -53,6 +55,7 @@ class EditChannel extends Component
             'number_oktv' => 'nullable|integer',
             'name' => 'required|string',
             'url' => 'nullable|url',
+            'category' => 'required|string',
             'status' => 'required|string',
             'new_image' => 'nullable|image',
         ], [], [
@@ -60,6 +63,7 @@ class EditChannel extends Component
             'number_oktv' => __('OKTV channel number'),
             'name' => __('channel name'),
             'url' => __('channel URL'),
+            'category' => __('channel category'),
             'status' => __('channel status'),
             'new_image' => __('new channel image'),
         ]);
@@ -78,6 +82,7 @@ class EditChannel extends Component
             'number_oktv' => $this->number_oktv,
             'name' => $this->name,
             'url' => $this->url,
+            'category' => $this->category,
             'status' => $this->status,
             'image_url' => $this->image_url,
         ]);

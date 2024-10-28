@@ -11,7 +11,13 @@
             'icon' => 'fa-solid fa-tv',
             'route' => route('admin.channels.index'),
             'active' => request()->routeIs('admin.channels.*'),
-        ]
+        ],
+        [
+            'name' => __('Stages'),
+            'icon' => 'fa-solid fa-bars-staggered',
+            'route' => route('admin.stages.index'),
+            'active' => request()->routeIs('admin.stages.*'),
+        ],
     ];
 @endphp
 
@@ -28,10 +34,9 @@
             @foreach ($links as $link)
                 <li>
                     <a href="{{ $link['route'] }}"
-                        class="flex items-center p-2 text-gray-900 dark:text-white rounded-lg group {{ $link['active'] ? 'text-white bg-primary-600 dark:bg-primary-700' : 'hover:bg-primary-200 dark:hover:bg-primary-900' }}">
+                        class="flex items-center p-2 text-gray-900 dark:text-white rounded-lg group {{ $link['active'] ? 'text-white bg-primary-600 dark:bg-primary-700' : 'hover:bg-primary-600 dark:hover:bg-primary-700 hover:text-white' }}">
                         <span class="inline-flex w-8 h-8 justify-center items-center">
-                            <i
-                                class="{{ $link['icon'] }} {{ $link['active'] ? 'text-white' : 'text-gray-900 dark:text-white' }}"></i>
+                            <i class="{{ $link['icon'] }} {{ $link['active'] ? 'text-white' : 'dark:text-white' }}"></i>
                         </span>
                         <span class="ml-2">
                             {{ $link['name'] }}

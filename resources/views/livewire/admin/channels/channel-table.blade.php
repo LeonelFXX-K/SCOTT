@@ -63,6 +63,10 @@
                         {{ __('OKTV') }}
                     </th>
                     <th scope="col" class="px-4 py-3">
+                        <i class="fa-solid fa-list mr-1"></i>
+                        {{ __('Category') }}
+                    </th>
+                    <th scope="col" class="px-4 py-3">
                         <i class="fa-solid fa-toggle-on mr-1"></i>
                         {{ __('Status') }}
                     </th>
@@ -91,6 +95,13 @@
                         </td>
                         <td class="px-4 py-2.5">
                             {{ $channel->number_oktv }}
+                        </td>
+                        <td class="px-4 py-2.5">
+                            <span
+                                class="inline-flex items-center px-2 py-1 text-xs font-medium text-primary-800 bg-primary-200 rounded-full dark:bg-primary-800 dark:text-primary-200">
+                                <i class="fa-solid fa-layer-group mr-1"></i>
+                                {{ $channel->category }}
+                            </span>
                         </td>
                         <td class="px-4 py-2.5">
                             @if ($channel->status === 'Activo')
@@ -175,7 +186,7 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-4">
+    <div>
         {{ $channels->links() }}
     </div>
 </div>

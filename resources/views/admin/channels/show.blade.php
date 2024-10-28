@@ -47,7 +47,14 @@
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 <div class="flex items-center">
+                    <!-- Name -->
                     {{ $channel->name }}
+                    <!-- Category -->
+                    <span
+                        class="ml-2 inline-flex items-center px-2 py-1 text-xs font-medium text-primary-800 bg-primary-200 rounded-full dark:bg-primary-800 dark:text-primary-200">
+                        <i class="fa-solid fa-layer-group mr-1"></i>
+                        {{ $channel->category }}
+                    </span>
                     <!-- Status -->
                     @if ($channel->status === 'Activo')
                         <span

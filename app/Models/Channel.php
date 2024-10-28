@@ -14,6 +14,7 @@ class Channel extends Model
         'number_oktv',
         'name',
         'url',
+        'category',
         'status',
     ];
 

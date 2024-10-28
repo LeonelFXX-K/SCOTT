@@ -15,6 +15,7 @@ class CreateChannel extends Component
     public $number_oktv;
     public $name;
     public $url;
+    public $category = '';
     public $status = '';
 
     public function boot()
@@ -40,6 +41,7 @@ class CreateChannel extends Component
             'number_oktv' => 'nullable|integer',
             'name' => 'required|string',
             'url' => 'nullable|url',
+            'category' => 'required|string',
             'status' => 'required|string',
         ], [], [
             'image_url' => __('channel image'),
@@ -47,6 +49,7 @@ class CreateChannel extends Component
             'number_oktv' => __('OKTV channel number'),
             'name' => __('channel name'),
             'url' => __('channel URL'),
+            'category' => __('channel category'),
             'status' => __('channel status'),
         ]);
 
@@ -60,6 +63,7 @@ class CreateChannel extends Component
             'number_oktv' => $this->number_oktv,
             'name' => $this->name,
             'url' => $this->url,
+            'category' => $this->category,
             'status' => $this->status,
         ]);
 
