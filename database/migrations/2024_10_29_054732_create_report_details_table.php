@@ -10,15 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('channels', function (Blueprint $table) {
+        Schema::create('report_details', function (Blueprint $table) {
             $table->id();
-            $table->string('image_url');
-            $table->integer('number')->unique();
-            $table->integer('number_oktv')->nullable();
-            $table->string('name');
-            $table->string('url')->nullable();
+            $table->foreignId('report_id')->constrained()->onDelete('cascade');
+            $table->foreignId('channel_id')->constrained();
             $table->string('category');
-            $table->string('status');
+            $table->string('protocol');
+            $table->string('stage');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('channels');
+        Schema::dropIfExists('report_details');
     }
 };
