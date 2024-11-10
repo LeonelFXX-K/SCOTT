@@ -13,6 +13,8 @@ class Report extends Model
         'end_time',
         'duration',
         'reported_by',
+        'attended_by',
+        'status',
     ];
 
     public function details()

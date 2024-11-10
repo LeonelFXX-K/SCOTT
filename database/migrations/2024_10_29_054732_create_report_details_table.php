@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('category');
             $table->string('protocol');
             $table->string('stage');
+            $table->string('media');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

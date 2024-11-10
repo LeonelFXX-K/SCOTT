@@ -12,6 +12,8 @@ class ReportDetail extends Model
         'category',
         'protocol',
         'stage',
+        'media',
+        'description',
     ];
 
     public function report()

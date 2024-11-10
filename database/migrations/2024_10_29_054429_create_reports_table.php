@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->time('end_time')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->time('duration')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('reported_by');
+            $table->string('attended_by')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

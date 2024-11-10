@@ -58,11 +58,7 @@
 
     <script>
         Livewire.on('swal', data => {
-            Swal.fire({
-                icon: data.icon,
-                title: data.title,
-                text: data.text,
-            });
+            Swal.fire(data[0]);
         });
     </script>
 </body>
