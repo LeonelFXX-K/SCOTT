@@ -56,7 +56,7 @@ class CreateMomentlyReport extends Component
         $report = Report::create([
             'type' => 'Momentary',
             'report_date' => now()->toDateString(),
-            'reported_by' => Auth::user()->name,
+            'reported_by' => Auth::user()->id,
             'end_time' => null,
             'duration' => null,
             'status' => 'Reciente',
@@ -79,6 +79,9 @@ class CreateMomentlyReport extends Component
             'title' => __('Well done!'),
             'text' => __('Momentary report created successfully.')
         ]);
+
+        // En el componente o controlador donde se crea el reporte
+        $this->dispatch('reportCreated');
     }
 
     public function getChannelCount($categoryIndex)

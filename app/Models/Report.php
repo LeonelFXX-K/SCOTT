@@ -17,8 +17,13 @@ class Report extends Model
         'status',
     ];
 
-    public function details()
+    public function reportDetails()
     {
         return $this->hasMany(ReportDetail::class);
+    }
+
+    public function reportedBy()
+    {
+        return $this->belongsTo(User::class, 'reported_by');
     }
 }

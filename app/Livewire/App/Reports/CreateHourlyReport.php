@@ -66,7 +66,7 @@ class CreateHourlyReport extends Component
         $report = Report::create([
             'type' => 'Hourly',
             'report_date' => now()->toDateString(),
-            'reported_by' => Auth::user()->name,
+            'reported_by' => Auth::user()->id,
         ]);
 
         foreach ($this->categories as $category) {
