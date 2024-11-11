@@ -15,7 +15,7 @@
                         </div>
                         <input type="text" id="simple-search" wire:model.debounce.500ms="search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Search" required="" autofocus>
+                            placeholder="{{ __('Search') }}" required="" autofocus>
                     </div>
                 </form>
             </div>
@@ -40,15 +40,15 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-600 shadow-2xl">
                     <tr>
-                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-tv mr-1"></i>{{ __('Canal') }}</th>
-                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-clock mr-1"></i>{{ __('Hora') }}
+                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-tv mr-1"></i>{{ __('Channel') }}</th>
+                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-clock mr-1"></i>{{ __('Time') }}
                         </th>
                         <th scope="col" class="px-4 py-3"><i
-                                class="fa-solid fa-bars-staggered mr-1"></i>{{ __('Etapa') }}</th>
+                                class="fa-solid fa-bars-staggered mr-1"></i>{{ __('Stage') }}</th>
+                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-server mr-1"></i>{{ __('Protocol') }}
+                        </th>
                         <th scope="col" class="px-4 py-3"><i
-                                class="fa-solid fa-server mr-1"></i>{{ __('Protocolo') }}</th>
-                        <th scope="col" class="px-4 py-3"><i
-                                class="fa-solid fa-user-group mr-1"></i>{{ __('Reportó') }}</th>
+                                class="fa-solid fa-user-group mr-1"></i>{{ __('Reported by') }}</th>
                         <th scope="col" class="px-4 py-3"><span class="sr-only"><i
                                     class="fa-solid fa-sliders-h mr-1"></i>{{ __('Opciones') }}</span></th>
                     </tr>
@@ -57,7 +57,6 @@
                     @forelse ($reports as $report)
                         @foreach ($report->reportDetails ?? [] as $detail)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                                <!-- Canal -->
                                 <td
                                     class="px-4 py-2.5 font-bold text-gray-900 dark:text-white flex items-center space-x-2">
                                     <img src="{{ $detail->channel->image }}" alt="Channel Image"
@@ -65,21 +64,18 @@
                                     <span>{{ $detail->channel->name }}</span>
                                 </td>
 
-                                <!-- Hora -->
                                 <td class="px-4 py-2.5">
                                     <span
                                         class="inline-flex items-center px-3 py-2 text-xs font-medium text-gray-700 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-200"><i
                                             class="fa-solid fa-clock mr-1"></i> {{ $report->start_time }}</span>
                                 </td>
 
-                                <!-- Etapa -->
                                 <td class="px-4 py-2.5">
                                     <span
                                         class="inline-flex items-center px-3 py-2 text-xs font-medium text-blue-800 bg-blue-200 rounded-full dark:bg-blue-800 dark:text-blue-200"><i
                                             class="fas fa-folder-open mr-1"></i> {{ $detail->stage }}</span>
                                 </td>
 
-                                <!-- Protocolo -->
                                 <td class="px-4 py-2.5">
                                     <span
                                         class="inline-flex items-center px-3 py-2 text-xs font-medium text-blue-800 bg-blue-200 rounded-full dark:bg-blue-800 dark:text-blue-200"><i
@@ -89,28 +85,24 @@
                                 <td class="px-4 py-2.5">
                                     @if ($report->reportedBy && $report->reportedBy->profile_photo_path)
                                         <div class="relative">
-                                            <!-- Tooltip con nombre del usuario -->
                                             <div id="tooltip-{{ $report->id }}" role="tooltip"
                                                 class="absolute z-10 invisible inline-block px-6 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
                                                 style="white-space: nowrap;">
-                                                {{ $report->reportedBy->name }} <!-- Nombre del usuario -->
+                                                {{ $report->reportedBy->name }}
                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                             </div>
 
-                                            <!-- Imagen del avatar -->
                                             <img data-tooltip-target="tooltip-{{ $report->id }}"
                                                 class="w-10 h-10 rounded-full shadow-2xl"
                                                 src="{{ asset('storage/' . $report->reportedBy->profile_photo_path) }}"
                                                 alt="Reporter Avatar">
                                         </div>
                                     @else
-                                        <!-- Avatar predeterminado si no hay foto -->
                                         <img class="w-10 h-10 rounded-full shadow-2xl"
-                                            src="{{ asset('images/default-avatar.png') }}" alt="Default Avatar">
+                                            src="{{ asset('img/default-avatar.jpg') }}" alt="Default Avatar">
                                     @endif
                                 </td>
 
-                                <!-- Opciones -->
                                 <td class="px-4 py-2.5 flex items-center justify-center">
                                     <button
                                         class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100 p-3">
@@ -126,7 +118,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="text-center py-4 text-gray-500 dark:text-gray-400">
-                                No hay reportes disponibles.
+                                {{ __('No reports available.') }}
                             </td>
                         </tr>
                     @endforelse
