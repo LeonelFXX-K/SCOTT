@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-end mt-6 space-x-4">
+            <div class="flex justify-end pt-4 space-x-4">
                 <x-button type="submit">
                     <i class="fas fa-file-lines mr-1.5"></i> {{ __('Generate report') }}
                 </x-button>

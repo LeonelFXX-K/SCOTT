@@ -24,4 +24,9 @@ class Channel extends Model
             get: fn() => Storage::url($this->image_url),
         );
     }
+
+    public function reportDetails()
+    {
+        return $this->hasMany(ReportDetail::class);
+    }
 }

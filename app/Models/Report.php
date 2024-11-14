@@ -17,6 +17,11 @@ class Report extends Model
         'status',
     ];
 
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
     public function reportDetails()
     {
         return $this->hasMany(ReportDetail::class);
