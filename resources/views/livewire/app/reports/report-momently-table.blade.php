@@ -19,21 +19,6 @@
                     </div>
                 </form>
             </div>
-
-            <div class="w-full md:w-auto flex items-center justify-end space-x-3">
-                <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
-                    class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    type="button">
-                    <i class="fa-solid fa-filter mr-1.5"></i>
-                    {{ __('Filter') }}
-                    <i class="fa-solid fa-chevron-down ml-1.5"></i>
-                </button>
-                <div id="filterDropdown" class="z-10 hidden w-64 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
-                    <x-checkbox id="inactive-filter" wire:model.live="showInactive"></x-checkbox>
-                    <label for="inactive-filter"
-                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('Example') }}</label>
-                </div>
-            </div>
         </div>
 
         <div>
@@ -41,14 +26,17 @@
                 <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-600 shadow-2xl">
                     <tr>
                         <th scope="col" class="px-4 py-3"><i class="fa-solid fa-tv mr-2"></i>{{ __('Channel') }}</th>
-                        <th scope="col" class="px-4 py-3"><i class="fa-solid fa-clock mr-2"></i>{{ __('Time') }}
+                        <th scope="col" class="px-4 py-3">
+                            <i class="fa-solid fa-calendar mr-2"></i>{{ __('Reporting time') }}
+                            <a href="#" wire:click.prevent="toggleOrder">
+                                <i class="fa-solid fa-sort ms-1.5"></i>
+                            </a>
                         </th>
+
                         <th scope="col" class="px-4 py-3"><i
                                 class="fa-solid fa-bars-staggered mr-2"></i>{{ __('Stage') }}</th>
                         <th scope="col" class="px-4 py-3"><i class="fa-solid fa-server mr-2"></i>{{ __('Protocol') }}
                         </th>
-                        <th scope="col" class="px-4 py-3"><i
-                                class="fa-solid fa-user-group mr-2"></i>{{ __('Reported by') }}</th>
                         <th scope="col" class="px-4 py-3"><span class="sr-only"><i
                                     class="fa-solid fa-sliders-h mr-2"></i>{{ __('Options') }}</span></th>
                     </tr>
@@ -56,17 +44,19 @@
                 <tbody>
                     @forelse ($reports as $report)
                         @foreach ($report->reportDetails ?? [] as $detail)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 cursor-pointer select-none"
+                                wire:click="openReportDetails({{ $report->id }})">
                                 <td
-                                    class="px-4 py-2.5 font-bold text-gray-900 dark:text-white flex items-center space-x-2">
-                                    <img src="{{ $detail->channel->image }}" alt="Channel Image"
+                                    class="w-[238px] px-4 py-2.5 font-bold text-gray-900 dark:text-white flex items-center space-x-2">
+                                    <img src="{{ $detail->channel->image }}" alt=""
                                         class="w-10 h-10 object-center object-contain">
-                                    <span>{{ $detail->channel->number }} {{ $detail->channel->name }}</span>
+                                    <span class="truncate">{{ $detail->channel->number }}
+                                        {{ $detail->channel->name }}</span>
                                 </td>
-                                <td class="px-4 py-2.5">
+                                <td class="px-4 py-3">
                                     <span
                                         class="inline-flex items-center px-3 py-2 text-xs font-medium text-gray-700 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-200"><i
-                                            class="fa-solid fa-clock mr-1"></i> {{ $report->start_time }}</span>
+                                            class="fa-solid fa-clock mr-1"></i>{{ $report->formatted_date }}</span>
                                 </td>
                                 <td class="px-4 py-2.5">
                                     <span
@@ -75,55 +65,183 @@
                                 </td>
                                 <td class="px-4 py-2.5">
                                     <span
-                                        class="inline-flex items-center px-3 py-2 text-xs font-medium text-blue-800 bg-blue-200 rounded-full dark:bg-blue-800 dark:text-blue-200">
+                                        class="inline-flex items-center px-3 py-2 text-xs font-medium text-green-800 bg-green-200 rounded-full dark:bg-green-800 dark:text-green-200">
                                         @if ($detail->protocol == 'DASH')
-                                            <i class="fas fa-computer mr-1"></i>
+                                            <i class="fas fa-computer-mouse mr-1"></i>
                                         @elseif ($detail->protocol == 'HLS')
-                                            <i class="fas fa-tv mr-1"></i>
+                                            <i class="fas fa-display mr-1"></i>
                                         @elseif ($detail->protocol == 'DASH/HLS')
-                                            <i class="fas fa-computer text-base mr-1"></i>
-                                            <i class="fas fa-tv mr-1"></i>
+                                            <i class="fas fa-computer-mouse mr-1"></i>
+                                            <i class="fas fa-display mr-1"></i>
                                         @endif
                                         {{ $detail->protocol }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-2.5">
-                                    @if ($report->reportedBy && $report->reportedBy->profile_photo_path)
-                                        <div class="relative">
-                                            <div id="tooltip-{{ $report->id }}" role="tooltip"
-                                                class="absolute z-10 invisible inline-block px-6 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                                                style="white-space: nowrap;">
-                                                {{ $report->reportedBy->name }}
-                                                <div class="tooltip-arrow" data-popper-arrow></div>
-                                            </div>
-
-                                            <img data-tooltip-target="tooltip-{{ $report->id }}"
-                                                class="w-10 h-10 rounded-full shadow-2xl"
-                                                src="{{ asset('storage/' . $report->reportedBy->profile_photo_path) }}"
-                                                alt="Reporter Avatar">
-                                        </div>
-                                    @else
-                                        <img class="w-10 h-10 rounded-full shadow-2xl"
-                                            src="{{ asset('img/default-avatar.jpg') }}" alt="Default Avatar">
+                                <td class="px-4 py-2 5">
+                                    @if ($report->status === 'Reciente')
+                                        <span
+                                            class="inline-flex items-center py-2 px-2 text-xs font-semibold bg-green-100 text-green-800 rounded-full dark:bg-green-800 dark:text-green-200">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
                                     @endif
-                                </td>
-                                <td class="px-1 py-2.5 flex items-center justify-center">
-                                    <button
-                                        class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100 p-3">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M6 6H14V14H6z" />
-                                        </svg>
-                                    </button>
                                 </td>
                             </tr>
                         @endforeach
                     @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-2.5 text-center">{{ __('No reports available.') }}</td>
+                            <td colspan="4" class="px-4 py-3 text-center">{{ __('No reports available.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
+
+            @if ($selectedReport)
+                <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-4xl w-full p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white"><i
+                                    class="fa-solid fa-file-lines mr-2"></i>{{ __('Report details') }}
+                            </h2>
+                            <button wire:click="closeReportDetails"
+                                class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                <span class="sr-only">Close Modal</span>
+                            </button>
+                        </div>
+
+                        <div
+                            class="flex items-center space-x-4 mb-6 rounded-lg shadow-2xl bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 p-4">
+                            <img src="{{ $selectedReport->reportDetails->first()->channel->image }}"
+                                alt="{{ $selectedReport->reportDetails->first()->channel->name }}"
+                                class="w-16 h-16 object-contain object-center">
+                            <div>
+                                <h4 class="text-lg font-semibold text-white">
+                                    {{ $selectedReport->reportDetails->first()->channel->name }}
+                                </h4>
+                                <p class="text-sm text-gray-50">
+                                    {{ __('Channel number:') }}
+                                    {{ $selectedReport->reportDetails->first()->channel->number }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    {{ __('Report time and status') }}</h5>
+                                <div class="inline-flex items-center space-x-3">
+                                    <span
+                                        class="inline-block py-1 px-3 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full dark:bg-blue-800 dark:text-blue-200">
+                                        <i class="fa-solid fa-calendar-days mr-1"></i>
+                                        {{ $selectedReport->report_date }} {{ $selectedReport->start_time }}
+                                    </span>
+                                    @if ($selectedReport->status === 'Reciente')
+                                        <span
+                                            class="inline-flex items-center py-1 px-3 text-xs font-semibold bg-green-100 text-green-800 rounded-full dark:bg-green-800 dark:text-green-200">
+                                            <i class="fas fa-clock mr-1"></i> {{ $selectedReport->status }}
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center py-1 px-3 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full dark:bg-gray-800 dark:text-gray-200">
+                                            <i class="fas fa-times-circle mr-1"></i> {{ $selectedReport->status }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    {{ __('Reported by') }}</h5>
+                                <p class="text-gray-900 dark:text-white flex items-center space-x-2">
+                                    <img src="{{ $selectedReport->reportedBy->profile_photo_url }}"
+                                        alt="{{ $selectedReport->reportedBy->name }}" class="w-8 h-8 rounded-full">
+                                    <span>{{ $selectedReport->reportedBy->name }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                            <div>
+                                <h5
+                                    class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                                    <i class="fas fa-tag mr-1 text-gray-500 dark:text-gray-400"></i>
+                                    <span>{{ __('Category') }}</span>
+                                </h5>
+                                <p class="text-gray-900 dark:text-white">
+                                    {{ $selectedReport->reportDetails->first()->category }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h5
+                                    class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                                    <i class="fa-solid fa-bars-staggered mr-1 text-gray-500 dark:text-gray-400"></i>
+                                    <span>{{ __('Stage') }}</span>
+                                </h5>
+                                <p class="text-gray-900 dark:text-white">
+                                    {{ $selectedReport->reportDetails->first()->stage }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h5
+                                    class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                                    <i class="fas fa-server mr-1 text-gray-500 dark:text-gray-400"></i>
+                                    <span>{{ __('Protocol') }}</span>
+                                </h5>
+                                <p class="text-gray-900 dark:text-white">
+                                    {{ $selectedReport->reportDetails->first()->protocol }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h5
+                                    class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                                    <i class="fas fa-forward mr-1 text-gray-500 dark:text-gray-400"></i>
+                                    <span>{{ __('Media') }}</span>
+                                </h5>
+                                <p class="text-gray-900 dark:text-white">
+                                    {{ $selectedReport->reportDetails->first()->media }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                        @if ($selectedReport->reportDetails->first()->description)
+                            <div class="w-full">
+                                <h5
+                                    class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                                    <i class="fas fa-comment mr-1 text-gray-500 dark:text-gray-400"></i>
+                                    <span>{{ __('Description') }}</span>
+                                </h5>
+                                <p class="text-gray-900 dark:text-white">
+                                    {{ $selectedReport->reportDetails->first()->description }}
+                                </p>
+                            </div>
+                        @endif
+
+                        <div class="flex justify-end mt-8 space-x-4">
+                            <button
+                                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                <i class="fas fa-circle-check mr-1.5"></i> {{ __('Mark as solved') }}
+                            </button>
+                            <button wire:click="closeReportDetails"
+                                class="flex items-center gap-2 py-2.5 px-5 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-400 hover:border-red-600 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-200 focus:z-10 transition-colors dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-red-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                <i class="fa-solid fa-xmark"></i> {{ __('Close') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
+
+        <div class="p-4">
+            {{ $reports->links() }}
+        </div>
+
     </div>
-    </wire:key=>
+</div>
