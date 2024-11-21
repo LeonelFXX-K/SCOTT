@@ -2,6 +2,7 @@
 
 namespace App\Livewire\App\Reports;
 
+use App\Models\Channel;
 use Livewire\Component;
 use App\Models\Report;
 use Livewire\WithPagination;
@@ -51,15 +52,16 @@ class ReportMomentlyTable extends Component
 
     public function render()
     {
+        $filteredChannels = Channel::where('number', 'like', '%' . $this->search . '%')
+            ->orWhere('name', 'like', '%' . $this->search . '%')
+            ->get();
+
         $reports = Report::where('type', 'Momentary')
-            ->orderBy('created_at', $this->order)
-            ->whereHas('reportDetails', function ($query) {
-                $query->whereHas('channel', function ($channelQuery) {
-                    $channelQuery->where('number', 'like', '%' . $this->search . '%')
-                        ->orWhere('name', 'like', '%' . $this->search . '%');
-                });
+            ->whereHas('reportDetails', function ($query) use ($filteredChannels) {
+                $query->whereIn('channel_id', $filteredChannels->pluck('id')->toArray());
             })
             ->with(['reportDetails.channel', 'reportedBy'])
+            ->orderBy('created_at', $this->order)
             ->paginate(5);
 
         $reports->getCollection()->transform(function ($report) {

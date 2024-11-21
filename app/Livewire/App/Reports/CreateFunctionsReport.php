@@ -114,9 +114,14 @@ class CreateFunctionsReport extends Component
                 $rules = [
                     "categories.$categoryName.channels.$channelIndex.channel_id" => 'required|exists:channels,id',
                     "categories.$categoryName.channels.$channelIndex.stage" => 'required|exists:stages,name',
-                    "categories.$categoryName.channels.$channelIndex.media" => 'required|in:' . implode(',', $this->mediaOptions),
-                    "categories.$categoryName.channels.$channelIndex.description" => 'nullable|string|max:255',
+                    "categories.$categoryName.channels.$channelIndex.description" => 'nullable|string',
                 ];
+
+                if (in_array($categoryName, ['EPG', 'CONTROL PARENTAL'])) {
+                    $rules["categories.$categoryName.channels.$channelIndex.media"] = 'nullable|in:' . implode(',', $this->mediaOptions);
+                } else {
+                    $rules["categories.$categoryName.channels.$channelIndex.media"] = 'required|in:' . implode(',', $this->mediaOptions);
+                }
 
                 if (in_array($categoryName, ['RESTART', 'CUTV'])) {
                     $rules["categories.$categoryName.channels.$channelIndex.protocol"] = 'required|in:' . implode(',', $this->protocols);
@@ -133,10 +138,11 @@ class CreateFunctionsReport extends Component
         }
     }
 
+
     public function render()
     {
         return view('livewire.app.reports.create-functions-report', [
-            'channels' => Channel::all(),
+            'channels' => Channel::where('status', 'Activo')->get(),
         ]);
     }
 }

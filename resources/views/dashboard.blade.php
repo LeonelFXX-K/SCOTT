@@ -4,7 +4,7 @@
             class="w-full md:w-1/3 p-6 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 rounded-lg shadow-2xl flex flex-col items-center space-y-6 h-[400px] overflow-y-auto">
             <div class="w-full flex justify-between items-center mb-4">
                 <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ __('User profile picture') }}"
-                    class="w-16 h-16 rounded-full shadow-2xl">
+                    class="w-16 h-16 rounded-full shadow-2xl object-center object-cover">
 
                 <div class="text-right text-white ml-auto">
                     <p class="text-xl font-semibold">

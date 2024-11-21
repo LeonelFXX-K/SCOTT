@@ -19,6 +19,14 @@
                     </div>
                 </form>
             </div>
+
+            <div class="w-full md:w-auto flex items-center justify-end space-x-3">
+                <a href="{{ route('history.index') }}"
+                    class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <i class="fa-solid fa-folder mr-1"></i>
+                    {{ __('Report history') }}
+                </a>
+            </div>
         </div>
 
         <div>
@@ -89,7 +97,12 @@
                         @endforeach
                     @empty
                         <tr>
-                            <td colspan="4" class="px-4 py-3 text-center">{{ __('No reports available.') }}</td>
+                            <td colspan="4" class="px-4 pt-8 text-center">
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full">
+                                    <i class="fa-solid fa-info-circle mr-1"></i>{{ __('No reports available.') }}
+                                </span>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->foreignId('report_id')->constrained()->onDelete('cascade');
             $table->foreignId('channel_id')->constrained();
             $table->string('category');
-            $table->string('protocol');
+            $table->string('protocol')->nullable();
             $table->string('stage');
-            $table->string('media');
-            $table->string('description')->nullable();
+            $table->string('media')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

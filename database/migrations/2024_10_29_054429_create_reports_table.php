@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->time('duration')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('reported_by');
             $table->string('attended_by')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
+            $table->string('solution')->nullable();
             $table->timestamps();
         });
     }

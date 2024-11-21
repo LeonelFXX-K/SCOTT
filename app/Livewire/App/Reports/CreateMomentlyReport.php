@@ -19,7 +19,7 @@ class CreateMomentlyReport extends Component
 
     public function mount()
     {
-        $this->stages = Stage::all();
+        $this->stages = Stage::where('status', 'Activo')->get();
         $this->category = [
             'name' => '',
             'channels' => [
@@ -132,7 +132,7 @@ class CreateMomentlyReport extends Component
     public function render()
     {
         return view('livewire.app.reports.create-momently-report', [
-            'channels' => Channel::all(),
+            'channels' => Channel::where('status', 'Activo')->get(),
         ]);
     }
 }

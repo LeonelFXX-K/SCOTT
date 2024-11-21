@@ -15,6 +15,7 @@ class Report extends Model
         'reported_by',
         'attended_by',
         'status',
+        'solution',
     ];
 
     public function channel()

@@ -73,6 +73,15 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('dashboard') }}" class="flex justify-start items-center">
+                                <i class="fa-solid fa-flag mr-2"></i>Dashboard
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('admin.dashboard') }}"
+                                class="flex justify-start items-center">
+                                <i class="fa-solid fa-hammer mr-2"></i>{{ __('Administration') }}
+                            </x-dropdown-link>
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}

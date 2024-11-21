@@ -19,7 +19,7 @@ class CreateHourlyReport extends Component
 
     public function mount()
     {
-        $this->stages = Stage::all();
+        $this->stages = Stage::where('status', 'Activo')->get();
         $this->addCategory();
     }
 
@@ -71,6 +71,7 @@ class CreateHourlyReport extends Component
                 'type' => 'Hourly',
                 'report_date' => now()->toDateString(),
                 'reported_by' => Auth::user()->id,
+                'status' => null,
             ]);
 
             foreach ($this->categories as $category) {
@@ -138,7 +139,7 @@ class CreateHourlyReport extends Component
     public function render()
     {
         return view('livewire.app.reports.create-hourly-report', [
-            'channels' => Channel::all(),
+            'channels' => Channel::where('status', 'Activo')->get(),
         ]);
     }
 }
